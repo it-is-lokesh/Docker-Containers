@@ -12,6 +12,17 @@ RUN apt-get update && apt-get install -y --fix-missing \
     swig \
     xvfb \
     bash-completion \
+    git \
+    ffmpeg \
+    python3-dev \
+    libsdl2-dev \
+    libsdl2-image-dev \
+    libsdl2-mixer-dev \
+    libsdl2-ttf-dev \
+    libfreetype6-dev \
+    libportmidi-dev \
+    libjpeg-dev \
+    python3-setuptools \
     && rm -rf /var/lib/apt/lists/*
 
 # 4. Upgrade pip and install your specific stack
@@ -22,7 +33,8 @@ RUN pip install --no-cache-dir --upgrade pip && \
     "pandas>=2.2.0" \
     "matplotlib>=3.8.0" \
     "gymnasium[all]" \
-    "stable-baselines3>=2.3.0"
+    "stable-baselines3>=2.3.0" \
+    "ipykernel"
 
 # --- Add Non-Root User ---
 ARG USERNAME=rl
@@ -35,6 +47,10 @@ RUN apt-get update && apt-get install -y sudo \
     && useradd -s /bin/bash --uid $USER_UID --gid $USER_GID -m $USERNAME \
     && echo $USERNAME ALL=\(root\) NOPASSWD:ALL > /etc/sudoers.d/$USERNAME \
     && chmod 0440 /etc/sudoers.d/$USERNAME
+
+RUN git config --global user.name "lokesh" && \
+    git config --global user.email "g.sailokesh9@gmail.com" && \
+    git config --global init.defaultBranch main
 
 # Set this user as the default for the container
 USER $USERNAME
