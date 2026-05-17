@@ -1,29 +1,45 @@
 # 1. Use the official PyTorch base (Runtime is lighter than Devel)
-FROM pytorch/pytorch:2.6.0-cuda12.6-cudnn9-runtime
+F# Ubuntu 24.04 base image
+FROM ubuntu:24.04
 
-# 2. Prevent interactive prompts during installation
+# Prevent interactive prompts
 ENV DEBIAN_FRONTEND=noninteractive
 
-# 3. Install system dependencies for Gymnasium/Rendering
-# These are essential for RL environments like Atari or MuJoCo
-RUN apt-get update && apt-get install -y --fix-missing \
-    libgl1-mesa-glx \
-    libosmesa6-dev \
-    swig \
-    xvfb \
-    bash-completion \
+# Install essential development tools
+RUN apt-get update && apt-get install -y \
+    build-essential \
+    cmake \
+    gcc \
+    g++ \
+    gdb \
+    clang \
+    lldb \
+    make \
+    ninja-build \
     git \
-    ffmpeg \
-    python3-dev \
-    libsdl2-dev \
-    libsdl2-image-dev \
-    libsdl2-mixer-dev \
-    libsdl2-ttf-dev \
-    libfreetype6-dev \
-    libportmidi-dev \
-    libjpeg-dev \
-    python3-setuptools \
+    curl \
+    wget \
+    vim \
+    nano \
+    htop \
+    tmux \
+    unzip \
+    zip \
+    pkg-config \
+    software-properties-common \
+    python3 \
+    python3-pip \
+    python3-venv \
+    iputils-ping \
+    net-tools \
+    iproute2 \
+    openssh-client \
+    sudo \
+    bash-completion \
     && rm -rf /var/lib/apt/lists/*
+
+# Upgrade pip
+RUN pip3 install --break-system-packages --upgrade pip
 
 # 4. Upgrade pip and install your specific stack
 # We use the PyTorch index to ensure we get the CUDA-enabled binaries
