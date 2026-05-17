@@ -1,5 +1,5 @@
-# 1. Use the official PyTorch base (Runtime is lighter than Devel)
-F# Ubuntu 24.04 base image
+# Simple Ubuntu Linux container
+# Ubuntu 24.04 base image
 FROM ubuntu:24.04
 
 # Prevent interactive prompts
@@ -25,11 +25,7 @@ RUN apt-get update && apt-get install -y \
     tmux \
     unzip \
     zip \
-    pkg-config \
     software-properties-common \
-    python3 \
-    python3-pip \
-    python3-venv \
     iputils-ping \
     net-tools \
     iproute2 \
@@ -38,23 +34,11 @@ RUN apt-get update && apt-get install -y \
     bash-completion \
     && rm -rf /var/lib/apt/lists/*
 
-# Upgrade pip
-RUN pip3 install --break-system-packages --upgrade pip
 
-# 4. Upgrade pip and install your specific stack
-# We use the PyTorch index to ensure we get the CUDA-enabled binaries
-RUN pip install --no-cache-dir --upgrade pip && \
-    pip install --no-cache-dir \
-    "numpy>=2.0.0" \
-    "pandas>=2.2.0" \
-    "matplotlib>=3.8.0" \
-    "gymnasium[all]" \
-    "stable-baselines3>=2.3.0" \
-    "ipykernel"
 
 # --- Add Non-Root User ---
-ARG USERNAME=rl
-ARG USER_UID=1000
+ARG USERNAME=linux
+ARG USER_UID=1001
 ARG USER_GID=$USER_UID
 
 # Create the user and add to sudo group

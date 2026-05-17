@@ -2,8 +2,7 @@ name: Build and Publish Docker Image
 
 on:
   push:
-    branches:
-      - '*'
+    branches: [ "inference_optimization" ]
 
 jobs:
   build-and-push:
@@ -45,4 +44,4 @@ jobs:
           context: .
           push: true
           # We use the new env variable here
-          tags: ghcr.io/${{ env.REPO_LC }}/rl-env:latest
+          tags: ghcr.io/${{ env.REPO_LC }}/linux-container:latest
