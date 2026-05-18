@@ -32,6 +32,13 @@ RUN apt-get update && apt-get install -y \
     openssh-client \
     sudo \
     bash-completion \
+    python3 \
+    python3-pip \
+    libboost-all-dev \
+    protobuf-compiler \
+    libprotobuf-dev \
+    pkg-config \
+    zlib1g-dev \
     && rm -rf /var/lib/apt/lists/*
 
 
